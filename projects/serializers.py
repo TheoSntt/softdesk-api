@@ -1,11 +1,12 @@
 from rest_framework import serializers
 from projects.models import Project
+from contributors.serializers import ContributorSerializer
 
 class ProjectListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ['id', 'title', 'description', 'type', 'contributors', 'autor']
+        fields = ['id', 'title', 'description', 'type']
     
     # def validate_title(self, value):
     #     if Project.objects.filter(title=value).exists():
@@ -20,13 +21,21 @@ class ProjectListSerializer(serializers.ModelSerializer):
 
 class ProjectDetailSerializer(serializers.ModelSerializer):
 
-    contributors = serializers.SerializerMethodField()
+    class Meta:
+        model = Project
+        fields = ['id', 'title', 'description', 'type', 'contributors', 'author']
+    
+
+class ProjectCreateSerializer(serializers.ModelSerializer):
+    # contributors = ContributorSerializer(many=True)
 
     class Meta:
         model = Project
-        fields = ['id', 'title', 'description', 'type', 'contributors', 'autor']
-
-    # def get_contributors(self, instance):
-    #     queryset = instance.contributors.all()
-    #     serializer = ContributorListSerializer(queryset, many=True)
-    #     return serializer.data
+        fields = ['id', 'title', 'description', 'type', 'contributors', 'author']
+        read_only_fields = ['author']
+    
+    def create(self, validated_data):
+        user = self.context['request'].user
+        validated_data['author'] = user
+        project = Project.objects.create(**validated_data)
+        return project
