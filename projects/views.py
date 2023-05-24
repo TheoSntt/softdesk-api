@@ -34,8 +34,8 @@ class ProjectViewset(MultipleSerializerMixin, ModelViewSet):
         # print(self.request.data)
         # print(serializer)
         req_user = self.request.user
-        print(serializer.validated_data)
-        print(self.request.data['contributors'])
+
+        # print(self.request.data['contributors'])
 
         instance = serializer.save()
 

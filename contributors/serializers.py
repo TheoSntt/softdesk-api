@@ -12,13 +12,8 @@ class UserSerializer(serializers.ModelSerializer):
     
 
 class ContributorSerializer(serializers.ModelSerializer):
-
-    # user = serializers.SerializerMethodField()
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
 
     class Meta:
         model = Contributor
-        fields = ['id', 'user', 'permission', 'role']
-    
-    # def get_user(self, instance):
-    #     serializer = UserSerializer()
-    #     return serializer.data
+        fields = ['user', 'role', 'permission']

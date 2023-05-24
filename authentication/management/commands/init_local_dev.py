@@ -16,8 +16,8 @@ class Command(BaseCommand):
         Project.objects.all().delete()
         User.objects.all().delete()
 
-        User.objects.create(email='admin@oc.drf', password='password-oc', first_name="John", last_name="Doe")
-        User.objects.create(email='test@oc.drf', password='password-oc', first_name="Bob", last_name="Morane")
-        User.objects.create(email='debug@oc.drf', password='password-oc', first_name="Paul", last_name="Bismuth")
+        User.objects.create_superuser(email='admin@oc.drf', password='password-oc', first_name="John", last_name="Doe")
+        User.objects.create_superuser(email='test@oc.drf', password='password-oc', first_name="Bob", last_name="Morane")
+        User.objects.create_superuser(email='debug@oc.drf', password='password-oc', first_name="Paul", last_name="Bismuth")
 
         self.stdout.write(self.style.SUCCESS("All Done !"))

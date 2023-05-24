@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from projects.models import Project
-from contributors.serializers import ContributorSerializer
+from contributors.serializers import ContributorSerializer, UserSerializer
 
 class ProjectListSerializer(serializers.ModelSerializer):
 
@@ -20,7 +20,8 @@ class ProjectListSerializer(serializers.ModelSerializer):
 
 
 class ProjectDetailSerializer(serializers.ModelSerializer):
-
+    contributors = ContributorSerializer(many=True,  source='contributor_set')
+    author = UserSerializer()
     class Meta:
         model = Project
         fields = ['id', 'title', 'description', 'type', 'contributors', 'author']
