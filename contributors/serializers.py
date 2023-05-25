@@ -12,8 +12,13 @@ class UserSerializer(serializers.ModelSerializer):
     
 
 class ContributorSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    # user = UserSerializer()
 
     class Meta:
         model = Contributor
-        fields = ['user', 'role', 'permission']
+        fields = ['id', 'user', 'project', 'role', 'permission']
+
+# class ContributorListSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Contributor
+#         fields = ['user', 'role', 'permission']
