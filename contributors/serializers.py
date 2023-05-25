@@ -4,21 +4,27 @@ from authentication.models import User
 
 class UserSerializer(serializers.ModelSerializer):
 
-    # user = serializers.SerializerMethodField()
-
     class Meta:
         model = User
         fields = ['id', 'email', 'first_name', 'last_name']
     
 
 class ContributorSerializer(serializers.ModelSerializer):
-    # user = UserSerializer()
+    user = UserSerializer()
 
     class Meta:
         model = Contributor
         fields = ['id', 'user', 'project', 'role', 'permission']
 
-# class ContributorListSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Contributor
-#         fields = ['user', 'role', 'permission']
+
+class ContributorCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Contributor
+        fields = ['id', 'user', 'project', 'role', 'permission']
+
+class ContributorModifySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Contributor
+        fields = ['id', 'role', 'permission']
