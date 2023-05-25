@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
     
 
 class ContributorSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    user = UserSerializer()
 
     class Meta:
         model = Contributor

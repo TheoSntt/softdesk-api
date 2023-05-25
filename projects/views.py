@@ -3,6 +3,8 @@ from projects.models import Project
 from projects.serializers import ProjectDetailSerializer, ProjectListSerializer, ProjectCreateSerializer
 from rest_framework.permissions import IsAuthenticated
 from contributors.models import Contributor
+from authentication.models import User
+from rest_framework.exceptions import ValidationError
 
 
 class MultipleSerializerMixin:
@@ -30,20 +32,47 @@ class ProjectViewset(MultipleSerializerMixin, ModelViewSet):
         return Project.objects.filter(contributors__in=[user])
     
     def perform_create(self, serializer):
-        # project = serializer.save()
-        # print(self.request.data)
-        # print(serializer)
-        req_user = self.request.user
 
-        # print(self.request.data['contributors'])
 
+        contributors = self.request.data.get('contributors')
+        if contributors is not None:
+            if isinstance(contributors, list):
+                for contributor in contributors:
+                    if isinstance(contributor, dict):
+                        if "user" in contributor and "role" in contributor and "permission" in contributor:
+                            if contributor['user'] == self.request.user.id:
+                                raise ValidationError('The author (request user) must not be passed amongst contributors')
+                        else:
+                            raise ValidationError('Missing key in a contributor')
+                    else:
+                        raise ValidationError('Within the contributors list, each contributor must be a dict')  
+            else:
+                raise ValidationError('Contributors argument is expected to be a list')
+        
         instance = serializer.save()
 
-        contributor = Contributor.objects.create(user=req_user,
+
+
+        contributor = Contributor.objects.create(user=self.request.user,
                                                  project=instance,
                                                  role="Auteur",
                                                  permission="Permission niveau 1")
 
+        contributors = self.request.data.get('contributors')
+        if contributors is not None:
+            for ctbt in contributors:
+                if ctbt['user'] != self.request.user.id:
+                    try:
+                        contributor = Contributor.objects.create(user=User.objects.get(id=ctbt['user']),
+                                                                project=instance,
+                                                                role=ctbt['role'],
+                                                                permission=ctbt['permission'])
+                    except KeyError:
+                        raise ValidationError('Missing key in a contributor')
+
+
+
+        
         super().perform_create(serializer)
 
         # title_data = self.request.data.get('title')
