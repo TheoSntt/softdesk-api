@@ -32,7 +32,7 @@ class ProjectCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ['id', 'title', 'description', 'type', 'contributors', 'author']
+        fields = ['id', 'title', 'description', 'type', 'author']
         read_only_fields = ['author']
     
     def create(self, validated_data):
@@ -42,9 +42,7 @@ class ProjectCreateSerializer(serializers.ModelSerializer):
         return project
     
     def validate_title(self, value):
-        # Nous vérifions que la catégorie existe
         if Project.objects.filter(title=value).exists():
-        # En cas d'erreur, DRF nous met à disposition l'exception ValidationError
             raise serializers.ValidationError('Project already exists')
         return value
     
@@ -54,4 +52,4 @@ class ProjectModifySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ['id', 'title', 'description', 'type', 'contributors']
+        fields = ['id', 'title', 'description', 'type']
