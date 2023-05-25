@@ -1,6 +1,6 @@
 from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
 from projects.models import Project
-from projects.serializers import ProjectDetailSerializer, ProjectListSerializer, ProjectCreateSerializer
+from projects.serializers import ProjectDetailSerializer, ProjectListSerializer, ProjectCreateSerializer, ProjectModifySerializer
 from rest_framework.permissions import IsAuthenticated
 from contributors.models import Contributor
 from authentication.models import User
@@ -10,10 +10,14 @@ from rest_framework.exceptions import ValidationError
 class MultipleSerializerMixin:
 
     detail_serializer_class = None
+    create_serializer_class= None
+    modify_serializer_class = None
 
     def get_serializer_class(self):
         if self.action == 'create' and self.create_serializer_class is not None:
             return self.create_serializer_class
+        elif self.action in ['update', 'partial_update'] and self.modify_serializer_class is not None:
+            return self.modify_serializer_class
         elif self.action == 'retrieve' and self.detail_serializer_class is not None:
             return self.detail_serializer_class
         return super().get_serializer_class()
@@ -24,6 +28,7 @@ class ProjectViewset(MultipleSerializerMixin, ModelViewSet):
     serializer_class = ProjectListSerializer
     detail_serializer_class = ProjectDetailSerializer
     create_serializer_class = ProjectCreateSerializer
+    modify_serializer_class = ProjectModifySerializer
 
     permission_classes = [IsAuthenticated]
  
