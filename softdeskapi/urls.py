@@ -21,6 +21,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from projects.views import ProjectViewset
 from contributors.views import UserViewset
 from issues.views import IssueViewset
+from comments.views import CommentViewset
 
 router = routers.SimpleRouter()
 
@@ -32,6 +33,9 @@ user_router.register(r'users', UserViewset, basename='users')
 issue_router = routers.NestedSimpleRouter(router, r'projects', lookup='project')
 issue_router.register(r'issues', IssueViewset, basename='issues')
 
+comment_router = routers.NestedSimpleRouter(issue_router, r'issues', lookup='issue')
+comment_router.register(r'comments', CommentViewset, basename='comments')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -41,4 +45,5 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/', include(user_router.urls)),
     path('api/', include(issue_router.urls)),
+    path('api/', include(comment_router.urls)),
 ]
