@@ -2,11 +2,11 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from comments.serializers import CommentSerializer, CommentCreateSerializer, CommentModifySerializer
 from comments.models import Comment
-from softdeskapi.views import MultipleSerializerMixin
+from softdeskapi.views import MultipleSerializerMixin, PatchDisallowed
 from softdeskapi.permissions import IsAuthorOrReadOnly
 
 
-class CommentViewset(MultipleSerializerMixin, ModelViewSet):
+class CommentViewset(MultipleSerializerMixin, PatchDisallowed, ModelViewSet):
  
     serializer_class = CommentSerializer
     create_serializer_class = CommentCreateSerializer

@@ -1,3 +1,6 @@
+from rest_framework.exceptions import MethodNotAllowed
+
+
 class MultipleSerializerMixin:
 
     detail_serializer_class = None
@@ -12,3 +15,9 @@ class MultipleSerializerMixin:
         elif self.action == 'retrieve' and self.detail_serializer_class is not None:
             return self.detail_serializer_class
         return super().get_serializer_class()
+
+
+class PatchDisallowed:
+
+    def partial_update(self, request, *args, **kwargs):
+        raise MethodNotAllowed('PATCH')

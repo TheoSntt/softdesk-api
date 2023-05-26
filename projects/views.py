@@ -3,10 +3,11 @@ from projects.models import Project
 from projects.serializers import ProjectDetailSerializer, ProjectListSerializer, ProjectCreateSerializer, ProjectModifySerializer
 from rest_framework.permissions import IsAuthenticated
 from softdeskapi.permissions import IsAuthorOrReadOnly
-from softdeskapi.views import MultipleSerializerMixin
+from softdeskapi.views import MultipleSerializerMixin, PatchDisallowed
 
 
-class ProjectViewset(MultipleSerializerMixin, ModelViewSet):
+
+class ProjectViewset(MultipleSerializerMixin, PatchDisallowed, ModelViewSet):
  
     serializer_class = ProjectListSerializer
     detail_serializer_class = ProjectDetailSerializer
@@ -22,6 +23,9 @@ class ProjectViewset(MultipleSerializerMixin, ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         return Project.objects.filter(contributors__in=[user]) | Project.objects.filter(author=user)
+
+    # def partial_update(self, request, *args, **kwargs):
+    #     raise MethodNotAllowed('PATCH')
     
     # def _verify_contributors_data(self, contributors, user_id):
     #     if contributors is not None:

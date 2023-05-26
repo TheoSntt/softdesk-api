@@ -2,11 +2,11 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from issues.serializers import IssueSerializer, IssueCreateSerializer, IssueModifySerializer
 from issues.models import Issue
-from softdeskapi.views import MultipleSerializerMixin
+from softdeskapi.views import MultipleSerializerMixin, PatchDisallowed
 from softdeskapi.permissions import IsAuthorOrReadOnly
 
 
-class IssueViewset(MultipleSerializerMixin, ModelViewSet):
+class IssueViewset(MultipleSerializerMixin, PatchDisallowed, ModelViewSet):
  
     serializer_class = IssueSerializer
     create_serializer_class = IssueCreateSerializer
