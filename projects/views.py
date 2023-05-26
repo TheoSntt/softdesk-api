@@ -2,7 +2,7 @@ from rest_framework.viewsets import ModelViewSet
 from projects.models import Project
 from projects.serializers import ProjectDetailSerializer, ProjectListSerializer, ProjectCreateSerializer, ProjectModifySerializer
 from rest_framework.permissions import IsAuthenticated
-from projects.permissions import IsOwnerOrReadOnly
+from softdeskapi.permissions import IsAuthorOrReadOnly
 from softdeskapi.views import MultipleSerializerMixin
 
 
@@ -13,7 +13,7 @@ class ProjectViewset(MultipleSerializerMixin, ModelViewSet):
     create_serializer_class = ProjectCreateSerializer
     modify_serializer_class = ProjectModifySerializer
 
-    permission_classes = [IsAuthenticated,IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated,IsAuthorOrReadOnly]
 
     # def create(self, request, *args, **kwargs):
     #     request.data['author'] = request.user.id

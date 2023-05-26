@@ -3,6 +3,8 @@ from rest_framework.permissions import IsAuthenticated
 from issues.serializers import IssueSerializer, IssueCreateSerializer, IssueModifySerializer
 from issues.models import Issue
 from softdeskapi.views import MultipleSerializerMixin
+from softdeskapi.permissions import IsAuthorOrReadOnly
+
 
 class IssueViewset(MultipleSerializerMixin, ModelViewSet):
  
@@ -10,7 +12,7 @@ class IssueViewset(MultipleSerializerMixin, ModelViewSet):
     create_serializer_class = IssueCreateSerializer
     modify_serializer_class = IssueModifySerializer
 
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
     queryset = Issue.objects.all()
 
     # def create(self, request, *args, **kwargs):
