@@ -3,7 +3,8 @@ from rest_framework.permissions import IsAuthenticated
 from contributors.serializers import ContributorSerializer, ContributorCreateSerializer, ContributorModifySerializer
 from contributors.models import Contributor
 from softdeskapi.views import MultipleSerializerMixin
-from contributors.permissions import IsProjectOwnerOrReadOnly
+from softdeskapi.permissions import IsProjectAuthorOrReadOnly
+
 
 class UserViewset(MultipleSerializerMixin, ModelViewSet):
  
@@ -11,7 +12,7 @@ class UserViewset(MultipleSerializerMixin, ModelViewSet):
     create_serializer_class = ContributorCreateSerializer
     modify_serializer_class = ContributorModifySerializer
 
-    permission_classes = [IsAuthenticated, IsProjectOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, IsProjectAuthorOrReadOnly]
     queryset = Contributor.objects.all()
 
     # def create(self, request, *args, **kwargs):

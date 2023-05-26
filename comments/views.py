@@ -3,6 +3,8 @@ from rest_framework.permissions import IsAuthenticated
 from comments.serializers import CommentSerializer, CommentCreateSerializer, CommentModifySerializer
 from comments.models import Comment
 from softdeskapi.views import MultipleSerializerMixin
+from softdeskapi.permissions import IsAuthorOrReadOnly
+
 
 class CommentViewset(MultipleSerializerMixin, ModelViewSet):
  
@@ -10,7 +12,7 @@ class CommentViewset(MultipleSerializerMixin, ModelViewSet):
     create_serializer_class = CommentCreateSerializer
     modify_serializer_class = CommentModifySerializer
 
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
     queryset = Comment.objects.all()
 
     def create(self, request, *args, **kwargs):

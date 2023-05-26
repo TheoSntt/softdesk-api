@@ -1,6 +1,6 @@
 from rest_framework.permissions import BasePermission
 
-class IsOwnerOrReadOnly(BasePermission):
+class IsAuthorOrReadOnly(BasePermission):
     def has_object_permission(self, request, view, obj):
         # Allow read permissions to any authenticated user
         if request.method in ['GET', 'HEAD', 'OPTIONS']:
