@@ -13,8 +13,8 @@ class CommentViewset(MultipleSerializerMixin, ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Comment.objects.all()
 
-    def create(self, request, *args, **kwargs):
-        issue_id = kwargs.get('issue_pk')
-        request.data['issue'] = issue_id
-        request.data['author'] = request.user.id
-        return super().create(request, *args, **kwargs)
+    # def create(self, request, *args, **kwargs):
+    #     issue_id = kwargs.get('issue_pk')
+    #     request.data['issue'] = issue_id
+    #     request.data['author'] = request.user.id
+    #     return super().create(request, *args, **kwargs)
