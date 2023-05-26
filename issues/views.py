@@ -13,8 +13,8 @@ class IssueViewset(MultipleSerializerMixin, ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Issue.objects.all()
 
-    def create(self, request, *args, **kwargs):
-        project_id = kwargs.get('project_pk')
-        request.data['project'] = project_id
-        request.data['author'] = request.user.id
-        return super().create(request, *args, **kwargs)
+    # def create(self, request, *args, **kwargs):
+    #     project_id = kwargs.get('project_pk')
+    #     request.data['project'] = project_id
+    #     request.data['author'] = request.user.id
+    #     return super().create(request, *args, **kwargs)
