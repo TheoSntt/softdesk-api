@@ -13,7 +13,10 @@ class CommentViewset(MultipleSerializerMixin, PatchDisallowed, ModelViewSet):
     modify_serializer_class = CommentModifySerializer
 
     permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
-    queryset = Comment.objects.all()
+    
+    def get_queryset(self):
+        issue_id = self.kwargs['issue_pk']
+        return Comment.objects.filter(issue=issue_id)
 
     # def create(self, request, *args, **kwargs):
     #     issue_id = kwargs.get('issue_pk')

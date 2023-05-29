@@ -13,7 +13,10 @@ class IssueViewset(MultipleSerializerMixin, PatchDisallowed, ModelViewSet):
     modify_serializer_class = IssueModifySerializer
 
     permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
-    queryset = Issue.objects.all()
+    
+    def get_queryset(self):
+        project_id = self.kwargs['project_pk']
+        return Issue.objects.filter(project=project_id)
 
     # def create(self, request, *args, **kwargs):
     #     project_id = kwargs.get('project_pk')

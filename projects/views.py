@@ -22,7 +22,9 @@ class ProjectViewset(MultipleSerializerMixin, PatchDisallowed, ModelViewSet):
  
     def get_queryset(self):
         user = self.request.user
-        return Project.objects.filter(contributors__in=[user]) | Project.objects.filter(author=user)
+        projects = Project.objects.filter(contributors__in=[user]) | Project.objects.filter(author=user)
+        projects = projects.distinct()
+        return projects
 
     # def partial_update(self, request, *args, **kwargs):
     #     raise MethodNotAllowed('PATCH')
