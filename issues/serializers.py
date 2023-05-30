@@ -11,7 +11,7 @@ class IssueSerializer(serializers.ModelSerializer):
     assignee = UserSerializer()
     class Meta:
         model = Issue
-        fields = ['id', 'title', 'description', 'tag', 'priority', 'status', 'project', 'author', 'assignee']
+        fields = ['id', 'title', 'description', 'tag', 'priority', 'status', 'author', 'assignee', 'created_time']
 
 
 class IssueCreateSerializer(serializers.ModelSerializer):
