@@ -18,8 +18,7 @@ class IssueViewset(MultipleSerializerMixin, PatchDisallowed, ModelViewSet):
         project_id = self.kwargs['project_pk']
         return Issue.objects.filter(project=project_id)
 
-    # def create(self, request, *args, **kwargs):
-    #     project_id = kwargs.get('project_pk')
-    #     request.data['project'] = project_id
-    #     request.data['author'] = request.user.id
-    #     return super().create(request, *args, **kwargs)
+    def create(self, request, *args, **kwargs):
+        if "assignee" not in request.data:
+            request.data['assignee'] = request.user.id
+        return super().create(request, *args, **kwargs)
