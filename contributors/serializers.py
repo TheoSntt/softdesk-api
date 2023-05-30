@@ -33,6 +33,14 @@ class ContributorCreateSerializer(serializers.ModelSerializer):
         # Serializer's create method expected behaviour
         contributor = Contributor.objects.create(**validated_data)
         return contributor
+    
+    def validate(self, data):
+        request = self.context.get('request')
+        project_id = request.parser_context['kwargs']['project_pk']
+        project = Project.objects.get(id=project_id)
+        if data['user'] == project.author:
+            raise serializers.ValidationError("That user is already the project's author. It must not be added to the contributors.")
+        return data
 
 class ContributorModifySerializer(serializers.ModelSerializer):
 
