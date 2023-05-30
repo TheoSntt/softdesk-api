@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from comments.serializers import CommentSerializer, CommentCreateSerializer, CommentModifySerializer
 from comments.models import Comment
 from softdeskapi.views import MultipleSerializerMixin, PatchDisallowed
-from softdeskapi.permissions import IsAuthorOrReadOnly
+from softdeskapi.permissions import IsAuthorOrReadOnly, IsContributorOrNoAcess
 
 
 class CommentViewset(MultipleSerializerMixin, PatchDisallowed, ModelViewSet):
@@ -12,7 +12,7 @@ class CommentViewset(MultipleSerializerMixin, PatchDisallowed, ModelViewSet):
     create_serializer_class = CommentCreateSerializer
     modify_serializer_class = CommentModifySerializer
 
-    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly, IsContributorOrNoAcess]
     
     def get_queryset(self):
         issue_id = self.kwargs['issue_pk']

@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from contributors.serializers import ContributorSerializer, ContributorCreateSerializer, ContributorModifySerializer
 from contributors.models import Contributor
 from softdeskapi.views import MultipleSerializerMixin, PatchDisallowed
-from softdeskapi.permissions import IsAuthorOrReadOnly
+from softdeskapi.permissions import IsContributorOrNoAcess, IsProjectAuthorOrReadOnly
 from django.db import IntegrityError
 from rest_framework.response import Response
 
@@ -14,7 +14,7 @@ class UserViewset(MultipleSerializerMixin, PatchDisallowed, ModelViewSet):
     create_serializer_class = ContributorCreateSerializer
     modify_serializer_class = ContributorModifySerializer
 
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsContributorOrNoAcess, IsProjectAuthorOrReadOnly]
 
     def create(self, request, *args, **kwargs):
         try:

@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from issues.serializers import IssueSerializer, IssueCreateSerializer, IssueModifySerializer
 from issues.models import Issue
 from softdeskapi.views import MultipleSerializerMixin, PatchDisallowed
-from softdeskapi.permissions import IsAuthorOrReadOnly
+from softdeskapi.permissions import IsAuthorOrReadOnly, IsContributorOrNoAcess
 
 
 class IssueViewset(MultipleSerializerMixin, PatchDisallowed, ModelViewSet):
@@ -12,7 +12,7 @@ class IssueViewset(MultipleSerializerMixin, PatchDisallowed, ModelViewSet):
     create_serializer_class = IssueCreateSerializer
     modify_serializer_class = IssueModifySerializer
 
-    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly, IsContributorOrNoAcess]
     
     def get_queryset(self):
         project_id = self.kwargs['project_pk']
