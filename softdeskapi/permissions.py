@@ -1,6 +1,7 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 from contributors.models import Contributor
 from projects.models import Project
+from django.shortcuts import get_object_or_404
 
 class IsAuthorOrReadOnly(BasePermission):
     
@@ -18,7 +19,7 @@ class IsProjectAuthorOrReadOnly(BasePermission):
         if request.method in ['GET', 'HEAD', 'OPTIONS']:
             return True
         project_id = view.kwargs['project_pk']
-        project = Project.objects.get(id=project_id)
+        project = get_object_or_404(Project, id=project_id)
         return project.author == request.user
 
 
@@ -26,5 +27,5 @@ class IsContributorOrNoAcess(BasePermission):
 
     def has_permission(self, request, view):
         project_id = view.kwargs['project_pk']
-        project = Project.objects.get(id=project_id)
+        project = get_object_or_404(Project, id=project_id)
         return Contributor.objects.filter(user=request.user, project=project_id).exists() or project.author == request.user
