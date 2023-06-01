@@ -39,6 +39,8 @@ python manage.py runserver
 ```
 5. L'API est prête à être utilisée. Son fonctionnement correspond aux documents de conception fournis.
  
+ 
+ 
  POUR PLUS D'INFORMATION SUR LE FONCTIONNEMENT DE L'API : La documentation complète de l'API est disponible à l'adresse suivante :
 ```		
 https://documenter.getpostman.com/view/27582538/2s93mAUzwo
