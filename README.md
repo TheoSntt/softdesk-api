@@ -5,14 +5,13 @@
 ## Avertissements
 
 Ce repo contient l'API de suivi de problèmes de SoftDesk.
-Ce ReadMe est pour l'instant un copier coller d'un autre projet et les informations qu'il contient ne sont donc pas à jour.
-Afin de la rendre plus facilement testable, le repository contient la base de données, la Secret Key Django, ainsi que des informations de connexions. Ces éléments devront être modifiés avant le déploiement.
+Il s'agit d'un projet exercice du cursur OpenClassrooms.
 
-## Mise en place et exécution en local de l'application
+## Mise en place et exécution en local de l'API
 
 1. Téléchargez le projet depuis Github. Soit directement (format zip), soit en clonant le projet en utilisant la commande suivante dans Git Bash :  
 ```
-git clone https://github.com/TheoSntt/OC_Project_9
+git clone https://github.com/TheoSntt/OC_Project_10
 ```
 2. Créez un environnement virtuel Python en exécutant la commande suivantes dans le Terminal de votre choix :
 ```
@@ -30,21 +29,17 @@ env/Scripts/activate.bat
 ```
 pip install -r requirements.txt
 ```
-NB : Puisque la BDD contenant du contenu visant à démontrer la fonctionnalité de l'application est incluse dans le répo. Il n'est pas nécessaire de procéder aux migrations. Si vous souhaitez recréer la BDD de zéro, supprimer le fichier db.sqlite3 et procédez aux migrations, à l'aide de la commande suivante :
+NB : Puisque la BDD n'est incluse dans le répo, il est nécessaire de procéder aux migrations. Pour créer la BDD en local, procédez aux migrations, à l'aide de la commande suivante :
 ```		
 python manage.py migrate
 ```
-4. Vous pouvez maintenant exécuter l'application en local. Il vous suffit de lancer le serveur local, à l'aide de la commande suivante :
+4. Vous pouvez maintenant exécuter l'API en local. Il vous suffit de lancer le serveur local, à l'aide de la commande suivante :
 ```		
 python manage.py runserver
 ```
-5. L'application est prête à être utilisée. Son fonctionnement correspond aux documents de conception fournis.
+5. L'API est prête à être utilisée. Son fonctionnement correspond aux documents de conception fournis.
  
- 
-BONUS : Si vous souhaitez tester vous même la conformité à la PEP8, vous pouvez installer et exécuter flake8, à l'aide des commandes suivantes :
+ POUR PLUS D'INFORMATION SUR LE FONCTIONNEMENT DE L'API : La documentation complète de l'API est disponible à l'adresse suivante :
 ```		
-pip install flake8
-```
-```		
-flake8 --exclude=env --max-line-length=119 --format=html --htmldir=rapport
+https://documenter.getpostman.com/view/27582538/2s93mAUzwo
 ```
