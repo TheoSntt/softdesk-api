@@ -2,10 +2,10 @@
 # API SOFTDESK
 
 
-## Avertissements
+## Description du projet
 
-Ce repo contient l'API de suivi de problèmes de SoftDesk.
-Il s'agit d'un projet exercice du cursur OpenClassrooms.
+Le projet API SoftDesk est un projet d'API REST réalisé dans le cadre de mon cursus OpenClassrooms. Il s'agit d'un de mes projets les plus aboutis. Réalisé avec Django REST Framework, dans le but d'apprendre celui-ci, il consiste en une API de "issue tracking" relativement classique (des contributeurs, des projets, des issues, des commentaires) mais qui m'a permis de mettre en application des concepts avancés comme les nested routers, la gestion des token JWT, des contrôles divers selon le rôle de l'utilisateur, ...  
+Par ailleurs, ce projet m'a permis de me re-familiariser avec Postman, et la documentation d'une API sur cet outil.
 
 ## Mise en place et exécution en local de l'API
 
